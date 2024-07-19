@@ -18,6 +18,14 @@ rpm-ostree install screen
 # this would install a package from rpmfusion
 # rpm-ostree install vlc
 
+# This should (hopefully) install the latest Private Internet Access
+wget $(curl -sL https://api.github.com/repos/pia-foss/desktop/releases/latest | \
+  jq -r ".body" | \
+  grep -E -o 'https://.*pia-linux.*.run' | \
+  grep -v -e arm64 -e armhf) && \
+sh ./pia-linux* && \
+rm pia-linux*
+
 #### Example for enabling a System Unit File
 
 systemctl enable podman.socket
