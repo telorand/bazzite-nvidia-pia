@@ -25,7 +25,7 @@ wget $(curl -sL https://api.github.com/repos/pia-foss/desktop/releases/latest | 
   grep -E -o 'https://.*pia-linux.*.run' | \
   grep -v -e arm64 -e armhf) -P /tmp/pia-linux && \
 # sudo chmod +x /tmp/pia-linux/pia-linux* && \
-sh /tmp/pia-linux/pia-linux* --tar -xf --touch --no-overwrite-dir -C /tmp/pia-linux && \
+sh /tmp/pia-linux/pia-linux* --tar -C /tmp/pia-linux --no-overwrite-dir -xvf && \
 chmod +x /tmp/pia-linux/install.sh && \
 sh /tmp/pia-linx/install.sh && \
 rm -rf /tmp/pia-linux*
