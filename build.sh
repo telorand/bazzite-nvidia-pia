@@ -23,7 +23,7 @@ wget $(curl -sL https://api.github.com/repos/pia-foss/desktop/releases/latest | 
   jq -r ".body" | \
   grep -E -o 'https://.*pia-linux.*.run' | \
   grep -v -e arm64 -e armhf) -P /tmp/pia-linux && \
-sh /tmp/pia-linux/pia-linux* --quiet && \
+sh /tmp/pia-linux/pia-linux* --quiet --accept --noprogress --nox11 --nodiskspace && \
 # sh /tmp/pia-linux/pia-linux* --noexec --quiet --target /tmp/pia-linux && \
 # chmod +x /tmp/pia-linux/install.sh && \
 # sh /tmp/pia-linx/install.sh && \
