@@ -19,12 +19,12 @@ rpm-ostree install screen
 # rpm-ostree install vlc
 
 # This should (hopefully) install the latest Private Internet Access
-mkdir -p /tmp/pia-linux
+mkdir -p /tmp/pia-linux && \
 wget $(curl -sL https://api.github.com/repos/pia-foss/desktop/releases/latest | \
   jq -r ".body" | \
   grep -E -o 'https://.*pia-linux.*.run' | \
   grep -v -e arm64 -e armhf) -P /tmp/pia-linux && \
-sh /tmp/pia-linux/pia-linux* --tar -xf -C /tmp/pia-linux && \
+sudo sh /tmp/pia-linux/pia-linux* --tar -xf -C /tmp/pia-linux && \
 chmod +x /tmp/pia-linux/install.sh && \
 sh /tmp/pia-linx/install.sh && \
 rm -rf /tmp/pia-linux*
