@@ -29,28 +29,8 @@ piapath="$(readlink -f /tmp/pia-linux/pia-linux*.run)"
 
 # Should now have the latest .run file in /tmp/pia-linux/
 
-MS_dd()
-{
-    blocks="$(expr "$3" / 1024)"
-    bytes="$(expr "$3" % 1024)"
-    dd if="$1" ibs="$2" skip=1 obs=1024 conv=sync 2> /dev/null | \
-    { test "$blocks" -gt 0 && dd ibs=1024 obs=1024 count="$blocks" ; \
-      test "$bytes"  -gt 0 && dd ibs=1 obs=1024 count="$bytes" ; } 2> /dev/null
-}
+sh $(sed -n 's|/dev/tty|/dev/null|g' $piapath)
 
-# Get the filesizes variable
-# Keep the above function for readability, and keep the filesizes check, just in case of future updates.
-filesizes="$(sed -nr 's/^.*filesizes="([0-9]+)".*$/\1/p' "$piapath")"
-offset=$(head -n 624 "$piapath" | wc -c | tr -d " ")
-for s in "$filesizes";
-    do
-        tar -C /tmp/pia-linux --no-overwrite-dir -xf $(MS_dd "$piapath" "$offset" "$s" | gzip -cd) ;
-        offset="$(xpr "$offset" + "$s")";
-done
-
-# Should have the original file untarred at this point.
-chmod +x /tmp/pia-linux/install.sh && \
-sh /tmp/pia-linx/install.sh && \
 rm -rf /tmp/pia-linux
 
 #### Example for enabling a System Unit File
