@@ -44,7 +44,7 @@ filesizes="$(sed -nr 's/^.*filesizes="([0-9]+)".*$/\1/p' "$piapath")"
 offset=$(head -n 624 "$piapath" | wc -c | tr -d " ")
 for s in "$filesizes";
     do
-        tar -C /tmp/pia-linux --no-overwrite-dir -xvf $(MS_dd "$piapath" "$offset" "$s" | gzip -cd) ;
+        tar -C /tmp/pia-linux --no-overwrite-dir -xf $(MS_dd "$piapath" "$offset" "$s" | gzip -cd) ;
         offset="$(xpr "$offset" + "$s")";
 done
 
