@@ -19,19 +19,24 @@ rpm-ostree install screen
 # rpm-ostree install vlc
 
 # This should (hopefully) install the latest Private Internet Access
-mkdir -p /tmp/pia-linux;
+tardir="/var/tmp/pia-linux";
+mkdir -p $tardir;
 wget $(curl -sL https://api.github.com/repos/pia-foss/desktop/releases/latest | \
   jq -r ".body" | \
   grep -E -o 'https://.*pia-linux.*.run' | \
-  grep -v -e arm64 -e armhf) -P /tmp/pia-linux;
+  grep -v -e arm64 -e armhf) -P $tardir;
 
-piapath="$(readlink -f /tmp/pia-linux/pia-linux*.run)"
+piapath="$(readlink -f "$tardir"/pia-linux*.run)"
+chmod +x $piapath
 
 # Should now have the latest .run file in /tmp/pia-linux/
 
-sh $(sed -n 's|/dev/tty|/dev/null|g' $piapath)
+# sh $(sed -n 's|/dev/tty|/dev/null|g' $piapath)
+sh $piapath --tar -xf -C $tardir
+chmod +x "$tardir"/install.sh
+sh "$tardir"/install.sh
 
-rm -rf /tmp/pia-linux
+rm -rf $tardir
 
 #### Example for enabling a System Unit File
 
