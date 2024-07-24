@@ -54,6 +54,7 @@ su bazzite
 sh "$tardir"/install.sh
 
 # Cleanup PIA install steps
+su -
 killall -u bazzite
 userdel -f bazzite
 rm -rf $tardir
