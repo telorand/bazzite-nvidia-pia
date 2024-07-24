@@ -18,9 +18,10 @@ rpm-ostree install bootc
 rpm-ostree install vlc
 
 wget https://repository.mullvad.net/rpm/stable/mullvad.repo -P /etc/yum.repos.d
+rpm-ostree refresh-md -q
 rpm-ostree install mullvad-vpn
 
-mkdir -p /tmp
+# mkdir -p /tmp
 wget -r --no-parent -A 'NetExtender.Linux-.*.x86.64.rpm' https://software.sonicwall.com/NetExtender/ -P /tmp
 netextender="$(readlink -f /tmp/NetExtender.Linux-.*.x86.64.rpm)"
 rpm-ostree install "$netextender"
