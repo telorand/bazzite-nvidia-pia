@@ -13,7 +13,20 @@ RELEASE="$(rpm -E %fedora)"
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # this installs a package from fedora repos
-rpm-ostree install screen
+rpm-ostree install java-latest-openjdk
+rpm-ostree install bootc
+rpm-ostree install vlc
+
+wget https://repository.mullvad.net/rpm/stable/mullvad.repo -P /etc/yum.repos.d
+rpm-ostree install mullvad
+
+mkdir -p /tmp
+wget -r --no-parent -A 'NetExtender.Linux-.*.x86.64.rpm' https://software.sonicwall.com/NetExtender/ -P /tmp
+netextender="$(readlink -f /tmp/NetExtender.Linux-.*.x86.64.rpm)"
+rpm-ostree install "$netextender"
+rm "$netextender"
+
+rpm-ostree override remove waydroid
 
 # this would install a package from rpmfusion
 # rpm-ostree install vlc
@@ -29,13 +42,20 @@ wget $(curl -sL https://api.github.com/repos/pia-foss/desktop/releases/latest | 
 piapath="$(readlink -f "$tardir"/pia-linux*.run)"
 chmod +x $piapath
 
-# Should now have the latest .run file in /tmp/pia-linux/
+# Should now have the latest .run file in /var/tmp/pia-linux/
 
 # sh $(sed -n 's|/dev/tty|/dev/null|g' $piapath)
 sh $piapath --tar -xf -C $tardir
 chmod +x "$tardir"/install.sh
+
+useradd -s /bin/bash bazzite
+su bazzite
+
 sh "$tardir"/install.sh
 
+# Cleanup PIA install steps
+killall -u bazzite
+userdel -f bazzite
 rm -rf $tardir
 
 #### Example for enabling a System Unit File
