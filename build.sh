@@ -49,7 +49,7 @@ sh $piapath --tar -xf -C $tardir
 chmod +x "$tardir"/install.sh
 
 useradd -s /bin/bash bazzite
-runuser -u bazzite -c 'sh "$tardir"/install.sh'
+runuser -u bazzite -- sh "$tardir"/install.sh
 
 # Cleanup PIA install steps
 killall -u bazzite
