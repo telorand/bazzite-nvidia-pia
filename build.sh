@@ -26,7 +26,7 @@ rpm-ostree install vlc
 # rpm-ostree install "$netextender"
 # rm "$netextender"
 
-rpm-ostree override remove waydroid
+# rpm-ostree override remove waydroid
 
 # this would install a package from rpmfusion
 # rpm-ostree install vlc
