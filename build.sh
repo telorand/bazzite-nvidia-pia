@@ -34,7 +34,8 @@ rpm-ostree install vlc
 # This should (hopefully) install the latest Private Internet Access
 tardir="/var/tmp/pia-linux";
 mkdir -p $tardir;
-mkdir -p /opt/piavpn
+umount -l /opt
+mount /opt
 wget $(curl -sL https://api.github.com/repos/pia-foss/desktop/releases/latest | \
   jq -r ".body" | \
   grep -E -o 'https://.*pia-linux.*.run' | \
