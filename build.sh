@@ -49,9 +49,12 @@ sh $piapath --tar -xf -C $tardir
 chmod +x "$tardir"/install.sh
 
 useradd -s /bin/bash bazzite
+touch /etc/sudoers.d/pia
+echo "bazzite ALL=(ALL) NOPASSWD: $tardir/install.sh" | EDITOR='tee -a' visudo --file=/etc/sudoers.d/pia
 runuser -u bazzite -- sh "$tardir"/install.sh --force-architecture
 
 # Cleanup PIA install steps
+rm -f /etc/sudoers.d/pia
 killall -u bazzite
 userdel -f bazzite
 rm -rf $tardir
