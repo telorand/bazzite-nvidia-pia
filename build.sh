@@ -34,8 +34,6 @@ rpm-ostree install vlc
 # This should (hopefully) install the latest Private Internet Access
 tardir="/var/tmp/pia-linux";
 mkdir -p $tardir;
-umount -l /opt
-mount /opt
 wget $(curl -sL https://api.github.com/repos/pia-foss/desktop/releases/latest | \
   jq -r ".body" | \
   grep -E -o 'https://.*pia-linux.*.run' | \
@@ -53,6 +51,8 @@ chmod +x "$tardir"/install.sh
 useradd -s /bin/bash bazzite
 touch /etc/sudoers.d/pia
 echo "bazzite ALL=(ALL) NOPASSWD:ALL" | EDITOR='tee -a' visudo --file=/etc/sudoers.d/pia
+ls -l /opt
+ls -l /opt/piavpn
 runuser -u bazzite -- sh "$tardir"/install.sh --force-architecture
 
 # Cleanup PIA install steps
