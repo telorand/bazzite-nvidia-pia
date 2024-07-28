@@ -57,7 +57,7 @@ sed -i 's|/opt/${brandCode}vpn|/var/opt/${brandCode}vpn|g' "$tardir"/install.sh
 
 # This monstrosity changes the /bin/cp "foo" "bar" and cp "foo" "bar" commands to sh -c '"foo" "bar"'
 # sed -ri "s/(\/bin\/)?(cp )(-rf )?(\")(.*)(\")(.* )(\"?)(.*)(\"?)/sh -c \'\1\2\3\4\5\6\7\8\9\'/g" "$tardir"/install.sh
-sed -ri "s/(\/bin\/)?(cp )(-rf )?(\")(.*)(\")(.* )(\"?)(.*)(\"?)/\2\3\4\5\6\7\8\9/"
+sed -ri "s/(\/bin\/)?(cp )(-rf )?(\")(.*)(\")(.* )(\"?)(.*)(\"?)/\2\3\4\5\6\7\8\9/" "$tardir"/install.sh
 # sed -i "s|root=.*$|root=\"${tardir}\"|" "$tardir"/install.sh
 chmod +x "$tardir"/install.sh
 
