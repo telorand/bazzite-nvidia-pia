@@ -46,13 +46,14 @@ chmod +x $piapath
 
 # sh $(sed -n 's|/dev/tty|/dev/null|g' $piapath)
 sh $piapath --tar -xf -C $tardir
+sed 's|/opt/${brandCode}vpn|/var/opt/${brandCode}vpn|g' "$tardir"/install.sh
 chmod +x "$tardir"/install.sh
 
 useradd -s /bin/bash bazzite
 touch /etc/sudoers.d/pia
 echo "bazzite ALL=(ALL) NOPASSWD:ALL" | EDITOR='tee -a' visudo --file=/etc/sudoers.d/pia
-ls -l /opt
-ls -l /opt/piavpn
+# ls -l /opt
+# This returns lrwxrwxrwx 2 root root 7 Jan  1  1970 /opt -> var/opt
 runuser -u bazzite -- sh "$tardir"/install.sh --force-architecture
 
 # Cleanup PIA install steps
