@@ -45,7 +45,7 @@ chmod +x $piapath
 # Should now have the latest .run file in /var/tmp/pia-linux/
 
 # sh $(sed -n 's|/dev/tty|/dev/null|g' $piapath)
-sh $piapath --tar -xf -C $tardir
+sh $piapath --tar -xfp -C $tardir
 sed -i 's|/opt/${brandCode}vpn|/var/opt/${brandCode}vpn|g' "$tardir"/install.sh
 chmod +x "$tardir"/install.sh
 
@@ -54,6 +54,12 @@ touch /etc/sudoers.d/pia
 echo "bazzite ALL=(ALL) NOPASSWD:ALL" | EDITOR='tee -a' visudo --file=/etc/sudoers.d/pia
 # ls -l /opt
 # This returns lrwxrwxrwx 2 root root 7 Jan  1  1970 /opt -> var/opt
+
+# root=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+# sudo /bin/cp -rf "$root/piafiles/"* $installDir/
+## /bin/cp: cannot stat '/var/tmp/pia-linux/piafiles/*': No such file or directory
+# ls "$tardir"/piafiles
+# ls "$tardir"/installfiles
 runuser -u bazzite -- sh "$tardir"/install.sh --force-architecture
 
 # Cleanup PIA install steps
