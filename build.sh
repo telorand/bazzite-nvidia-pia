@@ -47,7 +47,7 @@ chmod +x $piapath
 # sh $(sed -n 's|/dev/tty|/dev/null|g' $piapath)
 sh $piapath --tar -xpf -C $tardir
 sed -i 's|/opt/${brandCode}vpn|/var/opt/${brandCode}vpn|g' "$tardir"/install.sh
-sed -ir "s/root=.*$/root=\"${tardir}\"/"
+sed -i "s|root=.*$|root=\"${tardir}\"|"
 chmod +x "$tardir"/install.sh
 
 useradd -s /bin/bash bazzite
