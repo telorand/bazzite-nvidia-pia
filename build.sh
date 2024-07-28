@@ -48,7 +48,15 @@ chmod +x $piapath
 
 # sh $(sed -n 's|/dev/tty|/dev/null|g' $piapath)
 sh $piapath --tar -xpf -C $tardir
+
+# This changes refs of /opt to /var/opt to prevent issues with the /opt symlink that points to /var/opt anyway
 sed -i 's|/opt/${brandCode}vpn|/var/opt/${brandCode}vpn|g' "$tardir"/install.sh
+
+# sed -i "s|sudo /bin/cp -rf \"$root/piafiles/\"\* $installDir/|sudo sh -c '/bin/cp -rf \"$root/piafiles/\"* $installDir/'|" "$tardir"/install.sh
+# sed -i "s|sudo /bin/cp \"$root/installfiles/\"\*.sh \"$installDir/bin/\"|sudo sh -c '/bin/cp \"$root/installfiles/\"*.sh \"$installDir/bin/\"'|" "$tardir"/install.sh
+
+# This monstrosity changes the /bin/cp "foo" "bar" and cp "foo" "bar" commands to sh -c '"foo" "bar"'
+sed -ir "s/(\/bin\/)?(cp )(-rf )?(\")(.*)(\")(.* )(\"?)(.*)(\"?)/sh -c \'\1\2\3\4\5\6\7\8\9\'/g" "$tardir"/install.sh
 # sed -i "s|root=.*$|root=\"${tardir}\"|" "$tardir"/install.sh
 chmod +x "$tardir"/install.sh
 
@@ -61,9 +69,9 @@ echo "bazzite ALL=(ALL) NOPASSWD:ALL" | EDITOR='tee -a' visudo --file=/etc/sudoe
 # root=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 # sudo /bin/cp -rf "$root/piafiles/"* $installDir/
 ## /bin/cp: cannot stat '/var/tmp/pia-linux/piafiles/*': No such file or directory
-ls "$tardir"/piafiles
-ls "$tardir"/installfiles
-runuser -u bazzite -- sh "$tardir"/install.sh --force-architecture
+# ls "$tardir"/piafiles
+# ls "$tardir"/installfiles
+runuser -u bazzite -- sh "$tardir"/install.sh --systemd --force-architecture
 
 # Cleanup PIA install steps
 rm -f /etc/sudoers.d/pia
