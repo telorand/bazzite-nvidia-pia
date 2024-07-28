@@ -58,8 +58,8 @@ echo "bazzite ALL=(ALL) NOPASSWD:ALL" | EDITOR='tee -a' visudo --file=/etc/sudoe
 # root=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 # sudo /bin/cp -rf "$root/piafiles/"* $installDir/
 ## /bin/cp: cannot stat '/var/tmp/pia-linux/piafiles/*': No such file or directory
-# ls "$tardir"/piafiles
-# ls "$tardir"/installfiles
+ls "$tardir"/piafiles
+ls "$tardir"/installfiles
 runuser -u bazzite -- sh "$tardir"/install.sh --force-architecture
 
 # Cleanup PIA install steps
