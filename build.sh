@@ -48,7 +48,7 @@ function installPia() {
 
   # Remove refs to /dev/tty (should only be two). Errors will be echoed.
   sed -ni "| > /dev/tty|d" "$piapath";
-  sh "$piapath" --noprogress --nodiskspace -- --systemd --force-architecture;
+  sh "$piapath" --noprogress --nodiskspace -- --force-architecture;
 }
 
 useradd -s /bin/bash bazzite;
