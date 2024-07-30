@@ -49,10 +49,10 @@ function installPia() {
   # Remove refs to /dev/tty (should only be two). Errors will be echoed.
   sed -ni "| > /dev/tty|d" "$piapath";
   sh "$piapath" --noprogress --nodiskspace -- --force-architecture;
-  #sed -n "s|installDependencies|rpm-ostree install --idempotent libxkbcommon-x11 libnl3 libnsl iptables psmiscsh|2" "$(sh $piapath --noprogress --nodiskspace -- --force-architecture;)"
+  #sed -n "s|installDependencies|rpm-ostree install --idempotent libxkbcommon-x11 libnl3 libnsl iptables psmisc|2" "$(sh $piapath --noprogress --nodiskspace -- --force-architecture;)"
 }
 
-rpm-ostree install --idempotent libxkbcommon-x11 libnl3 libnsl iptables psmiscsh;
+rpm-ostree install --idempotent libxkbcommon-x11 libnl3 libnsl iptables psmisc;
 useradd -s /bin/bash bazzite;
 touch /etc/sudoers.d/pia;
 echo "bazzite ALL=(ALL) NOPASSWD:ALL" | EDITOR='tee -a' visudo --file=/etc/sudoers.d/pia;
