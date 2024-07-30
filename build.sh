@@ -47,7 +47,7 @@ function installPia() {
   # Should now have the latest .run file in /var/tmp/pia-linux/
 
   # Remove refs to /dev/tty (should only be two). Errors will be echoed.
-  sed -ni "| > /dev/tty|d" "$piapath";
+  sed -ni "/ > \/dev\/tty/d" "$piapath";
   sh "$piapath" --noprogress --nodiskspace -- --force-architecture;
   #sed -n "s|installDependencies|rpm-ostree install --idempotent libxkbcommon-x11 libnl3 libnsl iptables psmisc|2" "$(sh $piapath --noprogress --nodiskspace -- --force-architecture;)"
 }
